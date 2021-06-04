@@ -35,6 +35,12 @@ log-info() {
     echo "${W}info:${N} $1"
 }
 
+log-prompt() {
+    echo -n "${W}input:${N} $1"
+    shift
+    read "$@"
+}
+
 log-debug() {
     if [[ $FEZTAL_LOG_DEBUG -eq 1 ]]; then
         echo "${B}debug:${N} $1"
@@ -127,11 +133,10 @@ fetch-feztal-zip() {
 
     # TODO: find way to automatically download
     log-warn "automatic download not implemented!"
-    while [[ ! -f "$1" ]]; do
+    while true; do
         log-info "please download FEZTAL manually and move FEZTAL.zip to $1"
-        log-info "press enter when done, write 'cancel' to cancel"
+        log-prompt "press enter when done, write 'cancel' to cancel: " line
 
-        read line
         if [[ "$line" == "cancel" ]]; then
             log-error "download canceled"
             exit 1
@@ -139,6 +144,12 @@ fetch-feztal-zip() {
             true
         else
             log-warn "unknown answer '$line', expected empty, 'ok', or 'cancel'"
+        fi
+
+        if [[ -f "$1" ]]; then
+            break
+        else
+            log-warn "file $1 does not exist"
         fi
     done
 }
