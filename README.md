@@ -2,6 +2,16 @@
 
 A simple script that manages a wine prefix for FEZTAL.
 
+## Why a script? It works out of the Box!
+
+There are two things that don't perfectly work without workarounds:
+
+- The game crashes if it loses mouse focus while in fullscreen
+- The game is a slight bit less performant without DXVK
+
+The rest of this script is arguably overblown, it was originally made for MTG
+Arena, which has frequent updates and needs the workarounds a lot more.
+
 ## Usage
 
 ```
